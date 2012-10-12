@@ -30,7 +30,7 @@ Limitations
 -----------
 Polaris is an extension of the Google Maps External Library and hence suffers from a lot of its limitations and bugs (`PolarisMapView` must be used in a `MapActivity`, only one instance of `PolarisMapView` is allowed per `MapActivity`, etc.).
 
-While reducing the complexity of the library, `Polaris` made the use of `Overlay` almost useless by managing main `Overlay`s such as `MyLocationOverlay` and `ItemizedOverlay` internally. As a consequence, you must never use the `getOverlays()` method[^1]. `PolarisMapView` provides replacement methods such as `addOverlay(Overlay)`, `removeOverlay(Overlay)`, etc.
+While reducing the complexity of the library, `Polaris` made the use of `Overlay` almost useless by managing main `Overlay`s such as `MyLocationOverlay` and `ItemizedOverlay` internally. As a consequence, you must never use the `getOverlays()` method. `PolarisMapView` provides replacement methods such as `addOverlay(Overlay)`, `removeOverlay(Overlay)`, etc.
 
 Usage
 -----
@@ -111,8 +111,6 @@ License
 	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	See the License for the specific language governing permissions and
 	limitations under the License.
-	
-[^1]: `getOverlays()` method being `final`, it is impossible to override it an throw an `UnsupportedOperationException`.
 
 [1]: http://raw.github.com/cyrilmottier/Polaris/master/sample/polaris_sample.png
 [2]: https://play.google.com/store/apps/details?id=com.cyrilmottier.android.polarissample
