@@ -7,7 +7,7 @@ Polaris is a framework greatly enhancing the Google Maps external framework. It 
   * Make the developer's life easier
   * Make the resulting map look polished and natural
   
-![Polaris Sample screenshot][1]
+[![Polaris Sample screenshot][1]][6]
 
 Here are some interesting links you can use to discover Polaris:
 
@@ -112,8 +112,9 @@ License
 	See the License for the specific language governing permissions and
 	limitations under the License.
 
-[1]: http://raw.github.com/cyrilmottier/Polaris/master/sample/polaris_sample.png
+[1]: http://cyrilmottier.github.com/Polaris/img/polaris_sample.png
 [2]: https://play.google.com/store/apps/details?id=com.cyrilmottier.android.polarissample
 [3]: http://android.cyrilmottier.com/?p=824
 [4]: http://developer.android.com/guide/developing/projects/projects-eclipse.html
 [5]: http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject
+[6]: http://cyrilmottier.github.com/Polaris/img/polaris_sample_large.png
