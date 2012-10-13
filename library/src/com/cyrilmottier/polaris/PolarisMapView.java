@@ -16,6 +16,7 @@
 package com.cyrilmottier.polaris;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.annotation.TargetApi;
@@ -295,7 +296,7 @@ public class PolarisMapView extends MapView {
     private MapCalloutView mMapCallouts[] = new MapCalloutView[2];
     private int mMapCalloutIndex;
 
-    private Annotation mCurrentLocationOverlay;
+    private Annotation mCurrentLocationAnnotation;
     private String mCurrentLocationTitle;
     private String mCurrentLocationSubtitle;
 
@@ -551,12 +552,16 @@ public class PolarisMapView extends MapView {
                     @Override
                     public void onCurrentLocationChanged(Location location) {
                         final GeoPoint p = new GeoPoint((int) (location.getLatitude() * 1E6), (int) (location.getLongitude() * 1E6));
-                        if(mCurrentLocationOverlay != null)
-                            mAnnotationsOverlay.removeAnnotation(mCurrentLocationOverlay);
+                        if(mCurrentLocationAnnotation != null)
+                            mAnnotationsOverlay.removeAnnotation(mCurrentLocationAnnotation);
 
                         ColorDrawable blankMarker = new ColorDrawable(Color.TRANSPARENT);
-                        mCurrentLocationOverlay = new Annotation(p, mCurrentLocationTitle, mCurrentLocationSubtitle, blankMarker);
-                        mAnnotationsOverlay.addAnnotation(mCurrentLocationOverlay);
+                        mCurrentLocationAnnotation = new Annotation(p, mCurrentLocationTitle, mCurrentLocationSubtitle, blankMarker);
+                        if(mAnnotationsOverlay == null) {
+                            setAnnotations(Collections.singletonList(mCurrentLocationAnnotation), blankMarker);
+                        } else {
+                            mAnnotationsOverlay.addAnnotation(mCurrentLocationAnnotation);
+                        }
                     }
                 });
 
@@ -639,6 +644,9 @@ public class PolarisMapView extends MapView {
             mOverlayContainer.setAnnotationsOverlay(null);
         } else {
             mAnnotationsOverlay = new AnnotationsOverlay(mMystiqueCallback, new ArrayList<Annotation>(annotations), annotationMarker);
+            if(mCurrentLocationAnnotation != null)
+                mAnnotationsOverlay.addAnnotation(mCurrentLocationAnnotation);
+
             mOverlayContainer.setAnnotationsOverlay(mAnnotationsOverlay);
         }
         // Reflect the changes in the MapView
