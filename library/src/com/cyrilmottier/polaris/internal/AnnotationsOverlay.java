@@ -85,6 +85,27 @@ public class AnnotationsOverlay extends ItemizedOverlay<Annotation> {
         return mAnnotations.get(index);
     }
 
+    public void addAnnotation(Annotation a) {
+        mAnnotations.add(a);
+        populate();
+    }
+
+    public void removeAnnotation(Annotation a) {
+        final int index = indexOf(a);
+        if(index != INVALID_POSITION) {
+            mAnnotations.remove(index);
+            populate();
+        }
+    }
+
+    private int indexOf(Annotation a) {
+        for(int i = 0, size = mAnnotations.size(); i < size; i++)
+            if(a == mAnnotations.get(i))
+                return i;
+
+        return INVALID_POSITION;
+    }
+
     public int getSelectedAnnotation() {
         return mSelectedAnnotation;
     }

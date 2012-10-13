@@ -21,7 +21,10 @@ import java.util.List;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -281,7 +284,7 @@ public class PolarisMapView extends MapView {
     private OnMapViewLongClickListener mOnMapViewLongClickListener;
 
     private OverlayContainer mOverlayContainer;
-    private MyLocationOverlay mMyLocationOverlay;
+    private PolarisMyLocationOverlay mMyLocationOverlay;
     private AnnotationsOverlay mAnnotationsOverlay;
 
     private boolean mIsInGesture;
@@ -291,6 +294,10 @@ public class PolarisMapView extends MapView {
 
     private MapCalloutView mMapCallouts[] = new MapCalloutView[2];
     private int mMapCalloutIndex;
+
+    private Annotation mCurrentLocationOverlay;
+    private String mCurrentLocationTitle;
+    private String mCurrentLocationSubtitle;
 
     /**
      * Create a new {@link PolarisMapView}.
@@ -507,6 +514,11 @@ public class PolarisMapView extends MapView {
         return mIsUserTrackingButtonEnabled;
     }
 
+    public void setCurrentLocationMarker(String title, String subtitle) {
+        mCurrentLocationTitle = title;
+        mCurrentLocationSubtitle = subtitle;
+    }
+
     /**
      * Enable/disable user tracking on this {@link PolarisMapView}.
      * 
@@ -530,10 +542,24 @@ public class PolarisMapView extends MapView {
                     );
                     //@formatter:on
                 }
-                mMyLocationOverlay = new MyLocationOverlay(getContext(), this);
+                mMyLocationOverlay = new PolarisMyLocationOverlay(getContext(), this);
                 mMyLocationOverlay.enableMyLocation();
                 mOverlayContainer.setUserLocationOverlay(mMyLocationOverlay);
                 addView(mUserTrackingButton);
+
+                mMyLocationOverlay.setOnCurrentLocationChangedListener(new PolarisMyLocationOverlay.OnCurrentLocationChangedListener() {
+                    @Override
+                    public void onCurrentLocationChanged(Location location) {
+                        final GeoPoint p = new GeoPoint((int) (location.getLatitude() * 1E6), (int) (location.getLongitude() * 1E6));
+                        if(mCurrentLocationOverlay != null)
+                            mAnnotationsOverlay.removeAnnotation(mCurrentLocationOverlay);
+
+                        ColorDrawable blankMarker = new ColorDrawable(Color.TRANSPARENT);
+                        mCurrentLocationOverlay = new Annotation(p, mCurrentLocationTitle, mCurrentLocationSubtitle, blankMarker);
+                        mAnnotationsOverlay.addAnnotation(mCurrentLocationOverlay);
+                    }
+                });
+
             } else {
                 if (mUserTrackingButton != null) {
                     removeView(mUserTrackingButton);
