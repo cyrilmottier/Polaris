@@ -609,6 +609,10 @@ public class PolarisMapView extends MapView {
      * @param annotationMarker The default marker
      */
     public void setAnnotations(List<Annotation> annotations, Drawable annotationMarker) {
+        //Remove opened callauts before inserting annotations
+        if (mAnnotationsOverlay != null)
+    		mAnnotationsOverlay.setSelectedAnnotation(INVALID_POSITION);
+
         if (annotations == null) {
             mOverlayContainer.setAnnotationsOverlay(null);
         } else {
