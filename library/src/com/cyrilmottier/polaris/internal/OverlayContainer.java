@@ -63,7 +63,7 @@ public class OverlayContainer extends Overlay {
                     break;
 
                 case 1:
-                    if (hasAnnotationsOverlay) {
+                    if (hasLocationOverlay && hasAnnotationsOverlay) {
                         return mAnnotationsOverlay;
                     }
                     break;
