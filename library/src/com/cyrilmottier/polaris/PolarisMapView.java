@@ -16,12 +16,16 @@
 package com.cyrilmottier.polaris;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -90,7 +94,7 @@ import com.google.android.maps.OverlayItem;
  * <p>Most (or should I say all) map-based applications uses 9-patches as map callout background.
  * While 9-patches are great in most cases, it doesn't allow variable stretching of stretchable areas.
  * In general, the Polaris library contains default resources and more specifically 
- * {@link MapViewCallout}. {@link MapViewCallout} allows variable positioning of the anchor. This 
+ * {@link MapCalloutView}. {@link MapCalloutView} allows variable positioning of the anchor. This
  * improvement is largely used by the Polaris library to get a more polished map. While most 
  * applications center the map on the tapped {@link OverlayItem}, {@link PolarisMapView} shows a
  * map callout trying to reduce scrolling as much as possible. The map is actually scrolled only there
@@ -281,7 +285,7 @@ public class PolarisMapView extends MapView {
     private OnMapViewLongClickListener mOnMapViewLongClickListener;
 
     private OverlayContainer mOverlayContainer;
-    private MyLocationOverlay mMyLocationOverlay;
+    private PolarisMyLocationOverlay mMyLocationOverlay;
     private AnnotationsOverlay mAnnotationsOverlay;
 
     private boolean mIsInGesture;
@@ -291,6 +295,10 @@ public class PolarisMapView extends MapView {
 
     private MapCalloutView mMapCallouts[] = new MapCalloutView[2];
     private int mMapCalloutIndex;
+
+    private Annotation mCurrentLocationAnnotation;
+    private String mCurrentLocationTitle;
+    private String mCurrentLocationSubtitle;
 
     /**
      * Create a new {@link PolarisMapView}.
@@ -490,7 +498,7 @@ public class PolarisMapView extends MapView {
     /**
      * Set a new {@link OnMapViewLongClickListener}.
      * 
-     * @param listener The new {@link OnMapViewLongClickListener}
+     * @param l The new {@link OnMapViewLongClickListener}
      */
     public void setOnMapViewLongClickListener(OnMapViewLongClickListener l) {
         mOnMapViewLongClickListener = l;
@@ -505,6 +513,11 @@ public class PolarisMapView extends MapView {
      */
     public boolean isUserTrackingButtonEnabled() {
         return mIsUserTrackingButtonEnabled;
+    }
+
+    public void setCurrentLocationMarker(String title, String subtitle) {
+        mCurrentLocationTitle = title;
+        mCurrentLocationSubtitle = subtitle;
     }
 
     /**
@@ -530,10 +543,28 @@ public class PolarisMapView extends MapView {
                     );
                     //@formatter:on
                 }
-                mMyLocationOverlay = new MyLocationOverlay(getContext(), this);
+                mMyLocationOverlay = new PolarisMyLocationOverlay(getContext(), this);
                 mMyLocationOverlay.enableMyLocation();
                 mOverlayContainer.setUserLocationOverlay(mMyLocationOverlay);
                 addView(mUserTrackingButton);
+
+                mMyLocationOverlay.setOnCurrentLocationChangedListener(new PolarisMyLocationOverlay.OnCurrentLocationChangedListener() {
+                    @Override
+                    public void onCurrentLocationChanged(Location location) {
+                        final GeoPoint p = new GeoPoint((int) (location.getLatitude() * 1E6), (int) (location.getLongitude() * 1E6));
+                        if(mCurrentLocationAnnotation != null)
+                            mAnnotationsOverlay.removeAnnotation(mCurrentLocationAnnotation);
+
+                        ColorDrawable blankMarker = new ColorDrawable(Color.TRANSPARENT);
+                        mCurrentLocationAnnotation = new Annotation(p, mCurrentLocationTitle, mCurrentLocationSubtitle, blankMarker);
+                        if(mAnnotationsOverlay == null) {
+                            setAnnotations(Collections.singletonList(mCurrentLocationAnnotation), blankMarker);
+                        } else {
+                            mAnnotationsOverlay.addAnnotation(mCurrentLocationAnnotation);
+                        }
+                    }
+                });
+
             } else {
                 if (mUserTrackingButton != null) {
                     removeView(mUserTrackingButton);
@@ -609,10 +640,17 @@ public class PolarisMapView extends MapView {
      * @param annotationMarker The default marker
      */
     public void setAnnotations(List<Annotation> annotations, Drawable annotationMarker) {
+        //Remove opened callauts before inserting annotations
+        if (mAnnotationsOverlay != null)
+    		mAnnotationsOverlay.setSelectedAnnotation(INVALID_POSITION);
+
         if (annotations == null) {
             mOverlayContainer.setAnnotationsOverlay(null);
         } else {
             mAnnotationsOverlay = new AnnotationsOverlay(mMystiqueCallback, new ArrayList<Annotation>(annotations), annotationMarker);
+            if(mCurrentLocationAnnotation != null)
+                mAnnotationsOverlay.addAnnotation(mCurrentLocationAnnotation);
+
             mOverlayContainer.setAnnotationsOverlay(mAnnotationsOverlay);
         }
         // Reflect the changes in the MapView
