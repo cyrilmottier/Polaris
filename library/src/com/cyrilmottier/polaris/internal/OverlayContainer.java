@@ -39,7 +39,7 @@ public class OverlayContainer extends Overlay {
      * @author Cyril Mottier
      */
     public interface MagnetoCallback {
-        void onSinpleTap(MotionEvent e);
+        void onSimpleTap(MotionEvent e);
 
         void onDoubleTap(MotionEvent e);
 
@@ -226,7 +226,7 @@ public class OverlayContainer extends Overlay {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             if (!mIsTapConsumedPerChildren) {
-                mCallback.onSinpleTap(e);
+                mCallback.onSimpleTap(e);
             }
             return true;
         }

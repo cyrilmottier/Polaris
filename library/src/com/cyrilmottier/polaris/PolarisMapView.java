@@ -811,7 +811,7 @@ public class PolarisMapView extends MapView {
 
     private final MagnetoCallback mMagnetoCallback = new MagnetoCallback() {
         @Override
-        public void onSinpleTap(MotionEvent e) {
+        public void onSimpleTap(MotionEvent e) {
             setSelectedAnnotation(INVALID_POSITION);
         }
 
