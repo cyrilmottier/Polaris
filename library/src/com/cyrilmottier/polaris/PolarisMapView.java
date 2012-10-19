@@ -490,7 +490,7 @@ public class PolarisMapView extends MapView {
     /**
      * Set a new {@link OnMapViewLongClickListener}.
      * 
-     * @param listener The new {@link OnMapViewLongClickListener}
+     * @param l The new {@link OnMapViewLongClickListener}
      */
     public void setOnMapViewLongClickListener(OnMapViewLongClickListener l) {
         mOnMapViewLongClickListener = l;
