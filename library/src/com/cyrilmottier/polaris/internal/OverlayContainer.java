@@ -78,7 +78,7 @@ public class OverlayContainer extends Overlay {
             }
 
             return super.get(reindex);
-        };
+        }
 
         @Override
         public int size() {
@@ -90,7 +90,7 @@ public class OverlayContainer extends Overlay {
                 size++;
             }
             return size;
-        };
+        }
     };
 
     private final GestureDetector mGestureDetector;
@@ -233,7 +233,7 @@ public class OverlayContainer extends Overlay {
 
         public void onLongPress(MotionEvent e) {
             mCallback.onLongPress(e);
-        };
+        }
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {

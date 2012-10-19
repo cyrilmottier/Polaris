@@ -679,7 +679,7 @@ public class MapCalloutView extends ViewGroup {
 
         public void onLongPress(MotionEvent e) {
             mHasLongPressed = true;
-        };
+        }
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
@@ -688,5 +688,5 @@ public class MapCalloutView extends ViewGroup {
             }
             return true;
         }
-    };
+    }
 }
