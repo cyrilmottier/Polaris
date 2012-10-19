@@ -123,7 +123,7 @@ public class MapCalloutView extends ViewGroup {
 
         mTitle = (TextView) findViewById(R.id.polaris__title);
         mSubtitle = (TextView) findViewById(R.id.polaris__subtitle);
-        mDisclosure = (ImageView) findViewById(R.id.polaris__disclosure);
+        mDisclosure = findViewById(R.id.polaris__disclosure);
         mContentContainer = (FrameLayout) findViewById(R.id.polaris__content_container);
         mContent = findViewById(R.id.polaris__content);
     }
