@@ -307,7 +307,7 @@ public class MapCalloutView extends ViewGroup {
     }
 
     /**
-     * Set a new lister to listen to double tap events.
+     * Set a new listener to listen to double tap events.
      * 
      * @param l The listener to set
      */
