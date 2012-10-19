@@ -462,7 +462,7 @@ public class MapCalloutView extends ViewGroup {
      * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT},
      * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT}).
      * 
-     * @param rightAccessoryView The new left accessory view.
+     * @param leftAccessoryView The new left accessory view.
      */
     public void setLeftAccessoryView(View leftAccessoryView) {
         if (leftAccessoryView != null && leftAccessoryView.getParent() != null) {
@@ -508,7 +508,7 @@ public class MapCalloutView extends ViewGroup {
      * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT},
      * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT}).
      * 
-     * @param rightAccessoryView The new left accessory view.
+     * @param customView The new left accessory view.
      */
     public void setCustomView(View customView) {
         if (customView != null && customView.getParent() != null) {
