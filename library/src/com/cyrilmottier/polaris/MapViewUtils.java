@@ -82,7 +82,7 @@ public final class MapViewUtils {
      * @param mapView The {@link MapView} to animate
      * @param myLocationOverlay The {@link MyLocationOverlay} whose location
      *            will be used to determine the user location.
-     * @param errorMessageId The message to display in case no location is
+     * @param errorMessage The message to display in case no location is
      *            available.
      */
     public static void smoothCenterOnUserLocation(MapView mapView, MyLocationOverlay myLocationOverlay, String errorMessage) {

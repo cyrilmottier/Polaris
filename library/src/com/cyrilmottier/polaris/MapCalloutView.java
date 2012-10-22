@@ -123,7 +123,7 @@ public class MapCalloutView extends ViewGroup {
 
         mTitle = (TextView) findViewById(R.id.polaris__title);
         mSubtitle = (TextView) findViewById(R.id.polaris__subtitle);
-        mDisclosure = (ImageView) findViewById(R.id.polaris__disclosure);
+        mDisclosure = findViewById(R.id.polaris__disclosure);
         mContentContainer = (FrameLayout) findViewById(R.id.polaris__content_container);
         mContent = findViewById(R.id.polaris__content);
     }
@@ -307,7 +307,7 @@ public class MapCalloutView extends ViewGroup {
     }
 
     /**
-     * Set a new lister to listen to double tap events.
+     * Set a new listener to listen to double tap events.
      * 
      * @param l The listener to set
      */
@@ -316,10 +316,10 @@ public class MapCalloutView extends ViewGroup {
     }
 
     /**
-     * Set the title of the {@link MapViewCallout}. The {@link MapViewCallout}
+     * Set the title of the {@link MapCalloutView}. The {@link MapCalloutView}
      * automatically manages empty (null or zero-length) title.
      * 
-     * @param title The title to apply to this {@link MapViewCallout}
+     * @param title The title to apply to this {@link MapCalloutView}
      */
     public void setTitle(CharSequence title) {
         if (!TextUtils.isEmpty(title)) {
@@ -331,11 +331,11 @@ public class MapCalloutView extends ViewGroup {
     }
 
     /**
-     * Set the subtitle of the {@link MapViewCallout}. The
-     * {@link MapViewCallout} automatically manages empty (null or zero-length)
+     * Set the subtitle of the {@link MapCalloutView}. The
+     * {@link MapCalloutView} automatically manages empty (null or zero-length)
      * subtitle.
      * 
-     * @param subtitle The subtitle to apply to this {@link MapViewCallout}
+     * @param subtitle The subtitle to apply to this {@link MapCalloutView}
      */
     public void setSubtitle(CharSequence subtitle) {
         if (!TextUtils.isEmpty(subtitle)) {
@@ -373,7 +373,7 @@ public class MapCalloutView extends ViewGroup {
 
     /**
      * Enable or disable the disclosure indicator. Put simple, the disclosure
-     * indicator should always be visible when the {@link MapViewCallout} is
+     * indicator should always be visible when the {@link MapCalloutView} is
      * clickable i.e. when an action such as "opening" a details screen is done
      * on click.
      * 
@@ -400,7 +400,7 @@ public class MapCalloutView extends ViewGroup {
     }
 
     /**
-     * Set a new right accessory view to this {@link MapViewCallout}. The newly
+     * Set a new right accessory view to this {@link MapCalloutView}. The newly
      * added view will remove the previous one. Setting
      * {@link android.view.ViewGroup.LayoutParams} to the given right accessory
      * is not necessary as they will be automatically set to (
@@ -455,14 +455,14 @@ public class MapCalloutView extends ViewGroup {
     }
 
     /**
-     * Set a new left accessory view to this {@link MapViewCallout}. The newly
+     * Set a new left accessory view to this {@link MapCalloutView}. The newly
      * added view will remove the previous one. Setting
      * {@link android.view.ViewGroup.LayoutParams} to the given left accessory
      * is not necessary as they will be automatically set to (
      * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT},
      * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT}).
      * 
-     * @param rightAccessoryView The new left accessory view.
+     * @param leftAccessoryView The new left accessory view.
      */
     public void setLeftAccessoryView(View leftAccessoryView) {
         if (leftAccessoryView != null && leftAccessoryView.getParent() != null) {
@@ -500,15 +500,15 @@ public class MapCalloutView extends ViewGroup {
     }
 
     /**
-     * Set a new custom view to this {@link MapViewCallout}. The newly added
+     * Set a new custom view to this {@link MapCalloutView}. The newly added
      * view will remove the previous one. Custom views are usually used to
-     * completely manage the content of the {@link MapViewCallout}. Setting
+     * completely manage the content of the {@link MapCalloutView}. Setting
      * {@link android.view.ViewGroup.LayoutParams} to the given left accessory
      * is not necessary as they will be automatically set to (
      * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT},
      * {@link android.view.ViewGroup.LayoutParams#WRAP_CONTENT}).
      * 
-     * @param rightAccessoryView The new left accessory view.
+     * @param customView The new custom view.
      */
     public void setCustomView(View customView) {
         if (customView != null && customView.getParent() != null) {
@@ -534,7 +534,7 @@ public class MapCalloutView extends ViewGroup {
     }
 
     /**
-     * Indicates whether this {@link MapViewCallout} has some displayable
+     * Indicates whether this {@link MapCalloutView} has some displayable
      * content. The result of this method is used as a hint to know whether or
      * not the callout should be displayed once an {@link Annotation} has been
      * applied to it.
@@ -679,7 +679,7 @@ public class MapCalloutView extends ViewGroup {
 
         public void onLongPress(MotionEvent e) {
             mHasLongPressed = true;
-        };
+        }
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
@@ -688,5 +688,5 @@ public class MapCalloutView extends ViewGroup {
             }
             return true;
         }
-    };
+    }
 }

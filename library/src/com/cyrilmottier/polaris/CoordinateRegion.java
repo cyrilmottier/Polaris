@@ -74,7 +74,7 @@ public class CoordinateRegion {
      * Create a new region, initialized with the values in the specified region
      * (which is left unmodified).
      * 
-     * @param r The region whose coordinates are copied into this region.
+     * @param region The region whose coordinates are copied into this region.
      */
     public CoordinateRegion(CoordinateRegion region) {
         this.latitude = region.latitude;
@@ -140,7 +140,7 @@ public class CoordinateRegion {
     /**
      * Copy the coordinates into this {@link CoordinateRegion}.
      * 
-     * @param src The region whose coordinates are copied into this region
+     * @param region The region whose coordinates are copied into this region
      */
     public void set(CoordinateRegion region) {
         latitude = region.latitude;
