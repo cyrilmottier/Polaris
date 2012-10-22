@@ -795,7 +795,7 @@ public class PolarisMapView extends MapView {
             if (marker != null) {
                 markerHeight = marker.getBounds().height();
             }
-            mapCalloutView.setMarkerHeight(markerHeight);
+            mapCalloutView.setBottomOffset(markerHeight);
 
             if (mOnAnnotationSelectionChangedListener != null) {
                 //@formatter:off
