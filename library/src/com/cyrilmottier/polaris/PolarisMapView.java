@@ -742,6 +742,70 @@ public class PolarisMapView extends MapView {
         }
         return getMapCallout(mMapCalloutIndex);
     }
+    
+    /**
+	 * Adjust the zoom and center of the map so that all {@link Annotation} of
+	 * the AnnotationsOverlay will be displayed on screen
+	 */
+	public void centerAndZoom() {
+		if (mAnnotationsOverlay == null || mAnnotationsOverlay.size() < 1) {
+			return;
+		}
+
+		int minLat = Integer.MAX_VALUE, minLng = Integer.MAX_VALUE, maxLat = Integer.MIN_VALUE, maxLng = Integer.MIN_VALUE;
+
+		for (int i = 0; i < mAnnotationsOverlay.size(); i++) {
+			final GeoPoint point = mAnnotationsOverlay.getAnnotation(i)
+					.getPoint();
+			if (point != null) {
+				minLat = Math.min(point.getLatitudeE6(), minLat);
+				maxLat = Math.max(point.getLatitudeE6(), maxLat);
+				minLng = Math.min(point.getLongitudeE6(), minLng);
+				maxLng = Math.max(point.getLongitudeE6(), maxLng);
+			}
+		}
+
+		centerAndSpanMap(minLat, minLng, maxLat, maxLng);
+	}
+
+	/**
+	 * Adjust the zoom and center of the map so that all the given
+	 * {@link Annotation} of the annotations will be displayed on screen
+	 * 
+	 * @param annotations
+	 *            A {@link List} of {@link Annotation} used to center and zoom
+	 *            the map
+	 */
+	public void centerAndZoom(List<Annotation> annotations) {
+		if (annotations == null || annotations.size() < 1) {
+			return;
+		}
+
+		int minLat = Integer.MAX_VALUE, minLng = Integer.MAX_VALUE, maxLat = Integer.MIN_VALUE, maxLng = Integer.MIN_VALUE;
+
+		for (int i = 0; i < annotations.size(); i++) {
+			final GeoPoint point = annotations.get(i).getPoint();
+			if (point != null) {
+				minLat = Math.min(point.getLatitudeE6(), minLat);
+				maxLat = Math.max(point.getLatitudeE6(), maxLat);
+				minLng = Math.min(point.getLongitudeE6(), minLng);
+				maxLng = Math.max(point.getLongitudeE6(), maxLng);
+			}
+		}
+
+		centerAndSpanMap(minLat, minLng, maxLat, maxLng);
+	}
+
+	private void centerAndSpanMap(int minLat, int minLng, int maxLat, int maxLng) {
+		final GeoPoint center = new GeoPoint((maxLat + minLat) / 2,
+				(maxLng + minLng) / 2);
+		final int deltaLat = maxLat - minLat;
+		final int deltaLng = maxLng - minLng;
+
+		getController().zoomToSpan(deltaLat, deltaLng);
+		getController().animateTo(center);
+		invalidate();
+	}
 
     private final Runnable mRegionChangeConfirmedRunnable = new Runnable() {
         public void run() {
