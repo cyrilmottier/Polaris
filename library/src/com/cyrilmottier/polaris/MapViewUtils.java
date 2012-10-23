@@ -185,5 +185,4 @@ public final class MapViewUtils {
 
         return marker;
     }
-
 }
