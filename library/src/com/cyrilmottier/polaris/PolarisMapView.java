@@ -90,7 +90,7 @@ import com.google.android.maps.OverlayItem;
  * <p>Most (or should I say all) map-based applications uses 9-patches as map callout background.
  * While 9-patches are great in most cases, it doesn't allow variable stretching of stretchable areas.
  * In general, the Polaris library contains default resources and more specifically 
- * {@link MapViewCallout}. {@link MapViewCallout} allows variable positioning of the anchor. This 
+ * {@link MapCalloutView}. {@link MapCalloutView} allows variable positioning of the anchor. This
  * improvement is largely used by the Polaris library to get a more polished map. While most 
  * applications center the map on the tapped {@link OverlayItem}, {@link PolarisMapView} shows a
  * map callout trying to reduce scrolling as much as possible. The map is actually scrolled only there
@@ -490,7 +490,7 @@ public class PolarisMapView extends MapView {
     /**
      * Set a new {@link OnMapViewLongClickListener}.
      * 
-     * @param listener The new {@link OnMapViewLongClickListener}
+     * @param l The new {@link OnMapViewLongClickListener}
      */
     public void setOnMapViewLongClickListener(OnMapViewLongClickListener l) {
         mOnMapViewLongClickListener = l;
@@ -609,6 +609,11 @@ public class PolarisMapView extends MapView {
      * @param annotationMarker The default marker
      */
     public void setAnnotations(List<Annotation> annotations, Drawable annotationMarker) {
+        // Remove opened callouts before inserting annotations
+        if (mAnnotationsOverlay != null) {
+            mAnnotationsOverlay.setSelectedAnnotation(INVALID_POSITION);
+        }
+
         if (annotations == null) {
             mOverlayContainer.setAnnotationsOverlay(null);
         } else {
@@ -811,7 +816,7 @@ public class PolarisMapView extends MapView {
 
     private final MagnetoCallback mMagnetoCallback = new MagnetoCallback() {
         @Override
-        public void onSinpleTap(MotionEvent e) {
+        public void onSimpleTap(MotionEvent e) {
             setSelectedAnnotation(INVALID_POSITION);
         }
 

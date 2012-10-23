@@ -39,7 +39,7 @@ public class OverlayContainer extends Overlay {
      * @author Cyril Mottier
      */
     public interface MagnetoCallback {
-        void onSinpleTap(MotionEvent e);
+        void onSimpleTap(MotionEvent e);
 
         void onDoubleTap(MotionEvent e);
 
@@ -63,7 +63,7 @@ public class OverlayContainer extends Overlay {
                     break;
 
                 case 1:
-                    if (hasAnnotationsOverlay) {
+                    if (hasLocationOverlay && hasAnnotationsOverlay) {
                         return mAnnotationsOverlay;
                     }
                     break;
@@ -78,7 +78,7 @@ public class OverlayContainer extends Overlay {
             }
 
             return super.get(reindex);
-        };
+        }
 
         @Override
         public int size() {
@@ -90,7 +90,7 @@ public class OverlayContainer extends Overlay {
                 size++;
             }
             return size;
-        };
+        }
     };
 
     private final GestureDetector mGestureDetector;
@@ -226,14 +226,14 @@ public class OverlayContainer extends Overlay {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             if (!mIsTapConsumedPerChildren) {
-                mCallback.onSinpleTap(e);
+                mCallback.onSimpleTap(e);
             }
             return true;
         }
 
         public void onLongPress(MotionEvent e) {
             mCallback.onLongPress(e);
-        };
+        }
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {

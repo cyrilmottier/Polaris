@@ -56,7 +56,7 @@ public class Annotation extends OverlayItem {
      * @param title Title text for this annotation
      * @param snippet Snippet text for this annotation
      * @param marker Drawable used as this {@link Annotation}'s marker (please
-     *            note this marker must have its bounds already set. You canuse
+     *            note this marker must have its bounds already set. You can use
      *            the {@link MapViewUtils#boundMarker(Drawable, int)} utility
      *            method to prepare this {@link Drawable}'s bounds)
      */
