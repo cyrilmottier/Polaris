@@ -17,6 +17,7 @@ package com.cyrilmottier.android.polarissample;
 
 import java.util.ArrayList;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 import com.cyrilmottier.android.polarissample.util.Config;
 import com.cyrilmottier.polaris.Annotation;
 import com.cyrilmottier.polaris.MapCalloutView;
+import com.cyrilmottier.polaris.MapPinDrawable;
 import com.cyrilmottier.polaris.MapViewUtils;
 import com.cyrilmottier.polaris.PolarisMapView;
 import com.cyrilmottier.polaris.PolarisMapView.OnAnnotationSelectionChangedListener;
@@ -99,7 +101,9 @@ public class MainActivity extends MapActivity implements OnRegionChangedListener
         mMapView.setOnAnnotationSelectionChangedListener(this);
 
         // Prepare an alternate pin Drawable
-        final Drawable altMarker = MapViewUtils.boundMarkerCenterBottom(getResources().getDrawable(R.drawable.map_pin_holed_violet));
+        final Drawable altMarkerFrance = MapViewUtils.boundMarkerCenterBottom(getResources().getDrawable(R.drawable.map_pin_holed_violet));
+     	final Drawable altMarkerUsaEastCoast = MapViewUtils.boundMarkerCenterBottom(new MapPinDrawable(getResources(), Color.RED, Color.BLUE));
+
 
         // Prepare the list of Annotation using the alternate Drawable for all
         // Annotation located in France
@@ -107,8 +111,10 @@ public class MainActivity extends MapActivity implements OnRegionChangedListener
         for (Annotation[] region : sRegions) {
             for (Annotation annotation : region) {
                 if (region == sFrance) {
-                    annotation.setMarker(altMarker);
-                }
+                    annotation.setMarker(altMarkerFrance);
+                } else if (region == sUsaEastCoast) {
+ 					annotation.setMarker(altMarkerUsaEastCoast);
+ 				}
                 annotations.add(annotation);
             }
         }
