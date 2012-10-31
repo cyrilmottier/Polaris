@@ -187,39 +187,40 @@ public final class MapViewUtils {
     }
     
     /**
-	 * Adjust the zoom and center of the map so that all the given
-	 * {@link OverlayItem} of the annotations will be displayed on screen
-	 * 
-	 * @param annotations
-	 *            A {@link List} of {@link OverlayItem} used to center and zoom
-	 *            the map
-	 */
-	public static void centerAndZoom(MapView map, List<? extends OverlayItem> list) {
-		if (list == null || list.size() < 1) {
-			return;
-		}
+     * Adjust the zoom and center of the map so that all the given
+     * {@link OverlayItem} of the annotations will be displayed on screen
+     * 
+     * @param annotations A {@link List} of {@link OverlayItem} used to center
+     *            and zoom the map
+     */
+    public static void centerAndZoom(MapView map, List<? extends OverlayItem> list) {
+        if (list == null || list.size() < 1) {
+            return;
+        }
 
-		int minLat = Integer.MAX_VALUE, minLng = Integer.MAX_VALUE, maxLat = Integer.MIN_VALUE, maxLng = Integer.MIN_VALUE;
+        int minLat = Integer.MAX_VALUE;
+        int minLng = Integer.MAX_VALUE;
+        int maxLat = Integer.MIN_VALUE;
+        int maxLng = Integer.MIN_VALUE;
 
-		final int size = list.size();
-		for (int i = 0; i < size; i++) {
-			final GeoPoint point = list.get(i).getPoint();
-			if (point != null) {
-				minLat = Math.min(point.getLatitudeE6(), minLat);
-				maxLat = Math.max(point.getLatitudeE6(), maxLat);
-				minLng = Math.min(point.getLongitudeE6(), minLng);
-				maxLng = Math.max(point.getLongitudeE6(), maxLng);
-			}
-		}
+        final int size = list.size();
+        for (int i = 0; i < size; i++) {
+            final GeoPoint point = list.get(i).getPoint();
+            if (point != null) {
+                minLat = Math.min(point.getLatitudeE6(), minLat);
+                maxLat = Math.max(point.getLatitudeE6(), maxLat);
+                minLng = Math.min(point.getLongitudeE6(), minLng);
+                maxLng = Math.max(point.getLongitudeE6(), maxLng);
+            }
+        }
 
-		final GeoPoint center = new GeoPoint((maxLat + minLat) / 2,
-				(maxLng + minLng) / 2);
-		final int deltaLat = maxLat - minLat;
-		final int deltaLng = maxLng - minLng;
+        final GeoPoint center = new GeoPoint((maxLat + minLat) / 2, (maxLng + minLng) / 2);
+        final int deltaLat = maxLat - minLat;
+        final int deltaLng = maxLng - minLng;
 
-		map.getController().zoomToSpan(deltaLat, deltaLng);
-		map.getController().animateTo(center);
-		map.invalidate();
-	}
+        map.getController().zoomToSpan(deltaLat, deltaLng);
+        map.getController().setCenter(center);
+        map.invalidate();
+    }
 
 }
