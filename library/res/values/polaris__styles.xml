@@ -40,5 +40,13 @@
         <item name="android:textSize">@dimen/polaris__font_size_small</item>
         <item name="android:textStyle">normal</item>
     </style>
+    
+    <style name="TextAppearance.Polaris.Cluster" />
+    
+    <style name="TextAppearance.Polaris.Cluster.Pin">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/polaris__font_size_tiny</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
 </resources>

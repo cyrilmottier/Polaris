@@ -15,6 +15,8 @@
  */
 package com.cyrilmottier.polaris;
 
+import java.util.List;
+
 import android.graphics.drawable.Drawable;
 
 import com.google.android.maps.GeoPoint;
@@ -27,6 +29,8 @@ import com.google.android.maps.OverlayItem;
  * @author Cyril Mottier
  */
 public class Annotation extends OverlayItem {
+	
+	private List<Annotation> clusteredAnnotations;
 
     /**
      * Construct an {@link Annotation}.
@@ -64,6 +68,12 @@ public class Annotation extends OverlayItem {
         super(point, title, snippet);
         mMarker = marker;
     }
+    
+    public Annotation(GeoPoint point, String title, String snippet, Drawable marker, List<Annotation> annotations) {
+        super(point, title, snippet);
+        mMarker = marker;
+        setClusteredAnnotations(annotations);
+    }
 
     /**
      * Return the Drawable use as this {@link Annotation}'s marker or null if
@@ -74,4 +84,16 @@ public class Annotation extends OverlayItem {
     public Drawable getMarker() {
         return mMarker;
     }
+
+	public boolean isCluster() {
+		return clusteredAnnotations != null && clusteredAnnotations.size() > 1;
+	}
+
+	public List<Annotation> getClusteredAnnotations() {
+		return clusteredAnnotations;
+	}
+
+	public void setClusteredAnnotations(List<Annotation> clusteredAnnotations) {
+		this.clusteredAnnotations = clusteredAnnotations;
+	}
 }

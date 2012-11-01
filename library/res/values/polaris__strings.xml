@@ -22,4 +22,9 @@
     <string name="polaris__locate_myself">Locate myself</string>
     <string name="polaris__unable_to_locate_you">Waiting for localization data</string>
 
+    <string name="polaris__cluster_title">Cluster</string>
+
+    <plurals name="polaris__cluster_snippet">
+        <item quantity="other">Locations: %d</item>
+    </plurals>
 </resources>
