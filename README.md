@@ -95,11 +95,13 @@ e.g. in the sample below, a `Cluster` with
   * 4 or less `Annotation`s would be defined as Low and be displayed as a yellow circle
   * 5 - 8 `Annotation`s would be defined as Medium and be displayed as an orange circle
   * 9 or more `Annotation`s would be defined as High and be displayed as a red circle
-    
-	Clusterer clusterer = new Clusterer(mMapView, annotations, new ClusterConfig(4, 8));
-	mMapView.setAnnotations(clusterer.getClusters(), R.drawable.map_pin_holed_blue);
 
-[![Clustered Polaris Sample screenshot][7][8]]
+```java    
+    Clusterer clusterer = new Clusterer(mMapView, annotations, new ClusterConfig(4, 8));
+    mMapView.setAnnotations(clusterer.getClusters(), R.drawable.map_pin_holed_blue);
+```
+
+[![Clustered Polaris Sample screenshot][7]][8]
 
 Developed By
 ------------
