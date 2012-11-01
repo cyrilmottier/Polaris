@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Version 1.0.1 *(2012-10-28)*
+Version 1.0.1 *(2012-10-23)*
 --------------------------
 
 - General code and Javadoc cleanup 
