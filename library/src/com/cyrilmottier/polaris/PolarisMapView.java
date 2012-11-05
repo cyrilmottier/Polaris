@@ -264,6 +264,10 @@ public class PolarisMapView extends MapView {
         void onLongClick(PolarisMapView mapView, GeoPoint geoPoint);
     }
 
+    public interface OnMapViewClickListener {
+        void onClick(PolarisMapView mapView, GeoPoint geoPoint);
+    }
+
     /**
      * Amount of time to display about 10 frames at 60Hz
      */
@@ -279,6 +283,7 @@ public class PolarisMapView extends MapView {
     private OnAnnotationSelectionChangedListener mOnAnnotationSelectionChangedListener;
     private OnRegionChangedListener mOnRegionChangedListener;
     private OnMapViewLongClickListener mOnMapViewLongClickListener;
+    private OnMapViewClickListener mOnMapViewClickListener;
 
     private OverlayContainer mOverlayContainer;
     private MyLocationOverlay mMyLocationOverlay;
@@ -494,6 +499,15 @@ public class PolarisMapView extends MapView {
      */
     public void setOnMapViewLongClickListener(OnMapViewLongClickListener l) {
         mOnMapViewLongClickListener = l;
+    }
+
+    /**
+     * Set a new {@link OnMapViewClickListener}.
+     * 
+     * @param l The new {@link OnMapViewClickListener}
+     */
+    public void setOnMapViewClickListener(OnMapViewClickListener l) {
+        mOnMapViewClickListener = l;
     }
 
     /**
@@ -818,18 +832,25 @@ public class PolarisMapView extends MapView {
         @Override
         public void onSimpleTap(MotionEvent e) {
             setSelectedAnnotation(INVALID_POSITION);
+            if (mOnMapViewClickListener != null) {
+                mOnMapViewClickListener.onClick(PolarisMapView.this, getGeoPointForEvent(e));
+            }
         }
 
         @Override
         public void onLongPress(MotionEvent e) {
             if (mOnMapViewLongClickListener != null) {
-                mOnMapViewLongClickListener.onLongClick(PolarisMapView.this, getProjection().fromPixels((int) e.getX(), (int) e.getY()));
+                mOnMapViewLongClickListener.onLongClick(PolarisMapView.this, getGeoPointForEvent(e));
             }
         }
 
         @Override
         public void onDoubleTap(MotionEvent e) {
             getController().zoomInFixing((int) e.getX(), (int) e.getY());
+        }
+
+        private GeoPoint getGeoPointForEvent(MotionEvent e) {
+            return getProjection().fromPixels((int) e.getX(), (int) e.getY());
         }
     };
 
