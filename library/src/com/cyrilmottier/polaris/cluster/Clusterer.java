@@ -20,22 +20,12 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.MeasureSpec;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.cyrilmottier.polaris.Annotation;
-import com.cyrilmottier.polaris.MapViewUtils;
 import com.cyrilmottier.polaris.PolarisMapView;
 import com.cyrilmottier.polaris.R;
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapView;
 import com.google.android.maps.Projection;
 
 /**
