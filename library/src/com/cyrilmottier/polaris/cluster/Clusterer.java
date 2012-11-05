@@ -153,7 +153,7 @@ public class Clusterer {
      * This method will add the supplied {@link Annotation}s to our internal
      * cache of Annotations
      * 
-     * @param map A list of {@link Annotation} objects.
+     * @param items A list of {@link Annotation} objects.
      */
 	public void add(List<Annotation> items) {
 		mAnnotations = items;
@@ -164,7 +164,7 @@ public class Clusterer {
      * This method will add the supplied {@link Annotation} to our internal
      * cache of Annotations
      * 
-     * @param map An {@link Annotation} object.
+     * @param item An {@link Annotation} object.
      */
 	public void add(Annotation item) {
 		mAnnotations.add(item);
@@ -182,7 +182,7 @@ public class Clusterer {
      * if it overlaps with any other {@link Cluster} that we have stored. Otherwise
      * it will create a new {@link Cluster} object
      * 
-     * @param map An {@link Annotation} object.
+     * @param item An {@link Annotation} object.
      */
 	private void addInternal(Annotation item) {
 		

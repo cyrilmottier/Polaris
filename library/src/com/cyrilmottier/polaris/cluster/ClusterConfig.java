@@ -48,10 +48,8 @@ public class ClusterConfig {
      * 
      * @param low integer to define max num of annotations to be considered as 
      * 			a low frequency cluster
-     * @param mediun integer to define max num of annotations to be considered as 
+     * @param medium integer to define max num of annotations to be considered as
      * 			a medium frequency cluster
-     * @param high integer to define max num of annotations to be considered as 
-     * 			a high frequency cluster
      */
 	public ClusterConfig(int low, int medium) {
 		

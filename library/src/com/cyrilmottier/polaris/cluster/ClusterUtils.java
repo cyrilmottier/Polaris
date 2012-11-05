@@ -39,7 +39,7 @@ public class ClusterUtils {
 	/**
      * Draws a view into a Bitmap
      * 
-     * @param view The View to be converted to a Bitmap
+     * @param v The View to be converted to a Bitmap
      * @param size The dimensions (width & height) of bitmap to be returned
      * @return The Bitmap representation of the view
      */
