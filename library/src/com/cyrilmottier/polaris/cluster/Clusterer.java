@@ -20,22 +20,12 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.MeasureSpec;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.cyrilmottier.polaris.Annotation;
-import com.cyrilmottier.polaris.MapViewUtils;
 import com.cyrilmottier.polaris.PolarisMapView;
 import com.cyrilmottier.polaris.R;
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapView;
 import com.google.android.maps.Projection;
 
 /**
@@ -63,6 +53,7 @@ import com.google.android.maps.Projection;
  * These are configurable from within the Polaris colors and dimens project resources.
  * 
  * @author Damian Flannery
+ * @author Stefano Dacchille
  */
 public class Clusterer {
 
@@ -153,7 +144,7 @@ public class Clusterer {
      * This method will add the supplied {@link Annotation}s to our internal
      * cache of Annotations
      * 
-     * @param map A list of {@link Annotation} objects.
+     * @param items A list of {@link Annotation} objects.
      */
 	public void add(List<Annotation> items) {
 		mAnnotations = items;
@@ -164,7 +155,7 @@ public class Clusterer {
      * This method will add the supplied {@link Annotation} to our internal
      * cache of Annotations
      * 
-     * @param map An {@link Annotation} object.
+     * @param item An {@link Annotation} object.
      */
 	public void add(Annotation item) {
 		mAnnotations.add(item);
@@ -182,7 +173,7 @@ public class Clusterer {
      * if it overlaps with any other {@link Cluster} that we have stored. Otherwise
      * it will create a new {@link Cluster} object
      * 
-     * @param map An {@link Annotation} object.
+     * @param item An {@link Annotation} object.
      */
 	private void addInternal(Annotation item) {
 		
@@ -249,15 +240,15 @@ public class Clusterer {
 				if (total <= mClusterConfig.getLow()) {
 					marker = ClusterUtils.createClusterSpot(mContext, 
 							mContext.getResources().getDimensionPixelSize(R.dimen.polaris__cluster_spot_size_low), 
-							R.drawable.polaris__circle_gradient_low, "" + total);
+							mClusterConfig.getLowClusterBackgroundDrawableResource(), "" + total);
 				} else if (total <= mClusterConfig.getMedium()) {
 					marker = ClusterUtils.createClusterSpot(mContext, 
-							mContext.getResources().getDimensionPixelSize(R.dimen.polaris__cluster_spot_size_medium), 
-							R.drawable.polaris__circle_gradient_medium, "" + total);
+							mContext.getResources().getDimensionPixelSize(R.dimen.polaris__cluster_spot_size_medium),
+                            mClusterConfig.getMediumClusterBackgroundDrawableResource(), "" + total);
 				} else {
 					marker = ClusterUtils.createClusterSpot(mContext, 
 							mContext.getResources().getDimensionPixelSize(R.dimen.polaris__cluster_spot_size_high), 
-							R.drawable.polaris__circle_gradient_high, "" + total);
+							mClusterConfig.getHighClusterBackgroundDrawableResource(), "" + total);
 				}
 				
 				overlay = new Annotation(cluster.getCenter(), title, snippet, marker, items);
