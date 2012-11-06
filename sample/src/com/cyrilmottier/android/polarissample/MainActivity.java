@@ -36,6 +36,7 @@ import com.cyrilmottier.polaris.PolarisMapView;
 import com.cyrilmottier.polaris.PolarisMapView.OnAnnotationSelectionChangedListener;
 import com.cyrilmottier.polaris.PolarisMapView.OnRegionChangedListener;
 import com.cyrilmottier.polaris.cluster.ClusterConfig;
+import com.cyrilmottier.polaris.cluster.ClusterSpot;
 import com.cyrilmottier.polaris.cluster.Clusterer;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -115,7 +116,11 @@ public class MainActivity extends MapActivity implements OnRegionChangedListener
 
 		// Create a Clusterer, optionally configuring our own defaults for low,
 		// med & high marker thresholds
-		mClusterer = new Clusterer(mMapView, new ClusterConfig(4, 8));
+		mClusterer = new Clusterer(mMapView, new ClusterConfig(this, 4, 8));
+		
+		//TODO: uncomment and play if you want something more custom
+		//mClusterer = new Clusterer(mMapView, getAdvancedClusterConfig());
+		
 		mClusterer.add(annotations);
 		
 		// moved loading of annotations to separate method so that it can be
@@ -124,6 +129,30 @@ public class MainActivity extends MapActivity implements OnRegionChangedListener
 
 		final FrameLayout mapViewContainer = (FrameLayout) findViewById(R.id.map_view_container);
 		mapViewContainer.addView(mMapView, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+	}
+	
+	private ClusterConfig getAdvancedClusterConfig() {
+		
+		// Create cluster spot with our own custom drawable and
+		// change the text size and color as we like
+		ClusterSpot spot = new ClusterSpot(R.drawable.black_square);
+		spot.setTextColorResourceId(android.R.color.white);
+		spot.setTextSize(18);
+		
+		// Give our cluster marker our own title e.g. H for High 
+		// (this will be shown instead of the number of markers within
+		// the cluster spot)
+		spot.setTitle("H");
+		
+		// Build and return our ClusterConfig with custom ClusterSpot and
+		// thresholds for clustering
+		return new ClusterConfig.Builder(this)
+		.setHighClusterSpot(spot)
+		//TODO: define your own ClusterSpots for Med & High
+		//.setMediumClusterSpot(anotherSpot)
+		//.setLowClusterSpot(moarSpot)
+		.setLow(4).setMedium(8)
+			.build();
 	}
 
 	void loadMapData() {

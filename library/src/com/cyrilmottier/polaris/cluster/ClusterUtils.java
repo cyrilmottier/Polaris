@@ -20,6 +20,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.MeasureSpec;
@@ -27,7 +28,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cyrilmottier.polaris.MapViewUtils;
-import com.google.android.maps.MapView;
 
 /**
  * Some utility methods for Clustering.
@@ -35,57 +35,80 @@ import com.google.android.maps.MapView;
  * @author Damian Flannery
  */
 public class ClusterUtils {
-	
+
 	/**
-     * Draws a view into a Bitmap
-     * 
-     * @param v The View to be converted to a Bitmap
-     * @param size The dimensions (width & height) of bitmap to be returned
-     * @return The Bitmap representation of the view
-     */
-	public static Bitmap loadBitmapFromView(View v, int size) {
-		Bitmap bm = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+	 * Draws a view into a Bitmap
+	 * 
+	 * @param v
+	 *            The View to be converted to a Bitmap
+	 * @param size
+	 *            The dimensions (width & height) of bitmap to be returned
+	 * @return The Bitmap representation of the view
+	 */
+	public static Bitmap loadBitmapFromView(View v, int width, int height) {
+		Bitmap bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 		v.draw(new Canvas(bm));
 		return bm;
 	}
 
 	/**
-     * Creates a cluster spot drawable to be used as a map marker with a given size,
-     * background and title text.
-     * 
-     * @param context Activity context
-     * @param size The desired dimensions (width & height) of the cluster spot
-     * @param backgroundResourceId Drawable resource to be used as background for the cluster spot
-     * @param title Title text for this cluster spot     
-     * 
-     * @return A Map Marker Drawable 
-     */
-	public static Drawable createClusterSpot(Context context, int size, int backgroundResourceId, String title) {
-		
-		//Create root container and textview 
+	 * Creates a cluster spot drawable to be used as a map marker with a given
+	 * size, background and title text.
+	 * 
+	 * @param context
+	 *            Activity context
+	 * @param spot
+	 *            The desired appearance of the ClusterSpot
+	 * @param total
+	 *            number of Annotations contained within the cluster
+	 * 
+	 * @return A Map Marker Drawable
+	 */
+	public static Drawable createClusterSpot(Context context, ClusterSpot spot, int total) {
+
+		// Create root container and textview
 		RelativeLayout relativeLayout = new RelativeLayout(context);
 		TextView tv = new TextView(context);
-		tv.setText(title);
-		tv.setTextColor(context.getResources().getColor(android.R.color.white));
+
+		// set text to number of Annotations or custom text (if supplied)
+		if (!TextUtils.isEmpty(spot.getTitle())) {
+			tv.setText(spot.getTitle());
+		} else {
+			tv.setText("" + total);
+		}
+
+		// set the text color and size
+		tv.setTextColor(context.getResources().getColor(spot.getTextColorResourceId()));
+		tv.setTextSize(spot.getTextSize());
+
+		Drawable drawable;
+		if (spot.getDrawable() != null) {
+			drawable = spot.getDrawable();
+		} else {
+			drawable = context.getResources().getDrawable(spot.getDrawableResourceId());
+		}
+
+		// calculate width and height of cluster spot
+		int width = spot.getDrawableWidth() > 0 ? spot.getDrawableWidth() : drawable.getIntrinsicWidth();
+		int height = spot.getDrawableHeight() > 0 ? spot.getDrawableHeight() : drawable.getIntrinsicHeight();
+		relativeLayout.setBackgroundDrawable(drawable);
 
 		// Defining the layout parameters of the TextView
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(size, size);
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width, height);
 		lp.addRule(RelativeLayout.CENTER_IN_PARENT);
 
 		// Setting the parameters on the TextView
 		tv.setLayoutParams(lp);
 		tv.setGravity(Gravity.CENTER);
-		
+
 		// Adding the TextView to the RelativeLayout as a child
 		relativeLayout.addView(tv);
-		relativeLayout.setBackgroundResource(backgroundResourceId);
-		relativeLayout.measure(MeasureSpec.makeMeasureSpec(size,
-				MeasureSpec.EXACTLY), 
-					MeasureSpec.makeMeasureSpec(size, MeasureSpec.EXACTLY));
+
+		relativeLayout.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
 		relativeLayout.layout(0, 0, relativeLayout.getMeasuredWidth(), relativeLayout.getMeasuredHeight());
 
-		//Convert our view to a Drawable and set its bounds
-		Drawable d = new BitmapDrawable(context.getResources(), ClusterUtils.loadBitmapFromView(relativeLayout, size));
+		// Convert our view to a Drawable and set its bounds
+		Drawable d = new BitmapDrawable(context.getResources(), ClusterUtils.loadBitmapFromView(relativeLayout, width, height));
 		return MapViewUtils.boundMarkerCenterBottom(d);
 
 	}

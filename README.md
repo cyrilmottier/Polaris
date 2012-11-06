@@ -101,6 +101,8 @@ e.g. in the sample below, a `Cluster` with
     mMapView.setAnnotations(clusterer.getClusters(), R.drawable.map_pin_holed_blue);
 ```
 
+The 'ClusterConfig' can also be used to completely customise the drawables (also text size & colour) used for high, medium and low cluster spots. See sample code for examples.
+
 [![Clustered Polaris Sample screenshot][7]][8]
 
 Developed By
