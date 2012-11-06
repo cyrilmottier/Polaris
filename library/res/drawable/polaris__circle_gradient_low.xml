@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+	<item>
+		<shape
+			android:shape="oval">
+			<gradient
+				android:angle="90"
+				android:startColor="@color/polaris__cluster_spot_low"
+				android:endColor="@color/polaris__cluster_spot_low"
+				android:type="linear" />
+		</shape>
+	</item>
+	
+</layer-list>

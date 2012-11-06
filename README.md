@@ -84,6 +84,26 @@ Logically, the sample application doesn't include API keys. In order to run the 
     
     }
 
+Clustering
+----------
+
+You can simply use the `Clusterer` to filter and give you a reduced set of `Annotation`s before adding to your `PolarisMapView`.
+
+The `Clusterer` groups `Annotation` objects that overlap each other by projecting geolocation to a position on screen and then detecting pixel proximity. A single `Annotation` object will be used to represent overlapping `Annotation`s by replacing its map marker drawable with a cluster spot. This cluster spot will be a defined size and colour depending on how many `Annotation` objects it contains and the current `ClusterConfig` configuration.
+
+e.g. in the sample below, a `Cluster` with
+  * 4 or less `Annotation`s would be defined as Low and be displayed as a yellow circle
+  * 5 - 8 `Annotation`s would be defined as Medium and be displayed as an orange circle
+  * 9 or more `Annotation`s would be defined as High and be displayed as a red circle
+
+```java    
+    Clusterer clusterer = new Clusterer(mMapView, annotations, new ClusterConfig(4, 8));
+    mMapView.setAnnotations(clusterer.getClusters(), R.drawable.map_pin_holed_blue);
+```
+
+The 'ClusterConfig' can also be used to completely customise the drawables (also text size & colour) used for high, medium and low cluster spots. See sample code for examples.
+
+[![Clustered Polaris Sample screenshot][7]][8]
 
 Developed By
 ------------
@@ -118,3 +138,5 @@ License
 [4]: http://developer.android.com/guide/developing/projects/projects-eclipse.html
 [5]: http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject
 [6]: http://cyrilmottier.github.com/Polaris/img/polaris_sample_large.png
+[7]: https://dl.dropbox.com/u/27007357/Polaris/polaris_clustered_small.png
+[8]: https://dl.dropbox.com/u/27007357/Polaris/polaris_clustered.png

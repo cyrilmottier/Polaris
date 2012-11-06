@@ -22,4 +22,12 @@
 	<color name="polaris__primary">#333333</color>
 	<color name="polaris__secondary">#777777</color>
 	
+	<color name="polaris__cluster_spot_high">@color/polaris__ics_red</color>
+	<color name="polaris__cluster_spot_medium">@color/polaris__ics_orange</color>
+	<color name="polaris__cluster_spot_low">@color/polaris__ics_yellow</color>
+	
+	<color name="polaris__ics_yellow">#FFBB33</color>
+	<color name="polaris__ics_orange">#FF8800</color>
+	<color name="polaris__ics_red">#FF4444</color>
+	
 </resources>

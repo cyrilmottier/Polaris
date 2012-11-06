@@ -23,7 +23,12 @@
     <dimen name="polaris__spacing_normal">8dp</dimen>
     <dimen name="polaris__spacing_large">16dp</dimen>
     
+    <dimen name="polaris__font_size_tiny">10sp</dimen>
     <dimen name="polaris__font_size_small">14sp</dimen>
     <dimen name="polaris__font_size_normal">18sp</dimen>
-
+    
+    <dimen name="polaris__cluster_spot_size_high">32dip</dimen>
+	<dimen name="polaris__cluster_spot_size_medium">28dip</dimen>
+    <dimen name="polaris__cluster_spot_size_low">24dip</dimen>
+	
 </resources>
