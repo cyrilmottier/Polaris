@@ -513,6 +513,16 @@ public class PolarisMapView extends MapView {
      * @param enabled True if user tracking is enabled, false otherwise.
      */
     public void setUserTrackingButtonEnabled(boolean enabled) {
+        setUserTrackingButtonEnabled(enabled, null);
+    }
+
+    /**
+     * Enable/disable user tracking on this {@link PolarisMapView}.
+     * 
+     * @param enabled True if user tracking is enabled, false otherwise.
+     * @param customOverlay An object from a custom class inheriting from MyLocationOverlay, ignored if enabled is false.
+     */
+    public void setUserTrackingButtonEnabled(boolean enabled, MyLocationOverlay customOverlay) {
         if (mIsUserTrackingButtonEnabled != enabled) {
             mIsUserTrackingButtonEnabled = enabled;
             if (enabled) {
@@ -530,7 +540,14 @@ public class PolarisMapView extends MapView {
                     );
                     //@formatter:on
                 }
-                mMyLocationOverlay = new MyLocationOverlay(getContext(), this);
+                if (customOverlay == null)
+                {
+                    mMyLocationOverlay = new MyLocationOverlay(getContext(), this);
+                }
+                else
+                {
+                	mMyLocationOverlay = customOverlay;
+                }
                 mMyLocationOverlay.enableMyLocation();
                 mOverlayContainer.setUserLocationOverlay(mMyLocationOverlay);
                 addView(mUserTrackingButton);
