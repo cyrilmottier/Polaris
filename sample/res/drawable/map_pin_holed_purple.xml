@@ -19,8 +19,8 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@drawable/map_pin_holed_violet_alt" android:state_pressed="true"/>
-    <item android:drawable="@drawable/map_pin_holed_violet_alt" android:state_focused="true"/>
-    <item android:drawable="@drawable/map_pin_holed_violet_normal"/>
+    <item android:drawable="@drawable/map_pin_holed_purple_alt" android:state_pressed="true"/>
+    <item android:drawable="@drawable/map_pin_holed_purple_alt" android:state_focused="true"/>
+    <item android:drawable="@drawable/map_pin_holed_purple_normal"/>
 
 </selector>
