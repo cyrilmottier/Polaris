@@ -332,7 +332,7 @@ public class PolarisMapView extends MapView {
     @TargetApi(3)
     private void init() {
         setBuiltInZoomControls(!supportsMultiTouchZoom());
-        setActionnable(true);
+        setInteractive(true);
 
         mOverlayContainer = new OverlayContainer(getContext(), mMagnetoCallback);
         getOverlays().add(mOverlayContainer);
@@ -560,25 +560,40 @@ public class PolarisMapView extends MapView {
     }
 
     /**
-     * Indicates whether this {@link PolarisMapView} is actionnable (i.e. if it
+     * @deprecated Use {@link #isInteractive()} instead
+     */
+    public boolean isActionnable() {
+        return isInteractive();
+    }
+
+    /**
+     * @deprecated Use {@link #setInteractive(boolean)} instead
+     */
+    @Deprecated
+    public void setActionnable(boolean actionnable) {
+        setInteractive(actionnable);
+    }
+
+    /**
+     * Indicates whether this {@link PolarisMapView} is interactive (i.e. if it
      * can be zoomed and panned by the user). More specifically, this method is
      * a replacement for the {@link MapView#isClickable()}.
      * 
-     * @return true if this {@link PolarisMapView} is actionnable, false
+     * @return true if this {@link PolarisMapView} is interactive, false
      *         otherwise
      */
-    public boolean isActionnable() {
+    public boolean isInteractive() {
         return isClickable();
     }
 
     /**
      * Enables or disables action events for this view. When a
-     * {@link PolarisMapView} is actionnable it will be zoomable and pannable.
+     * {@link PolarisMapView} is interactive it will be zoomable and pannable.
      * 
-     * @param actionnable true to make the view actionnable, false otherwise
+     * @param actionnable true to make the view interactive, false otherwise
      */
-    public void setActionnable(boolean actionnable) {
-        setClickable(actionnable);
+    public void setInteractive(boolean interactive) {
+        setClickable(interactive);
     }
 
     // /**
