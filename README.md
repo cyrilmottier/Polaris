@@ -1,5 +1,6 @@
 Polaris
 =======
+_**Note**: Polaris relies on the Google Maps Android API v1 which as been [officially deprecated](https://developers.google.com/maps/documentation/android/v1/) as of December3rd, 2012. Because of this requirement, chances are high this library won't be updated is the future._
 
 Polaris is a framework greatly enhancing the Google Maps external framework. It aims to:
 
