@@ -181,7 +181,7 @@ public class MapCalloutDrawable extends Drawable {
 
     @Override
     public int getIntrinsicHeight() {
-        return Math.max(mLeftCapDrawable.getIntrinsicWidth(),
+        return Math.max(mLeftCapDrawable.getIntrinsicHeight(),
                 Math.max(mBottomAnchorDrawable.getIntrinsicHeight(), mRightCapDrawable.getIntrinsicHeight()));
     }
 

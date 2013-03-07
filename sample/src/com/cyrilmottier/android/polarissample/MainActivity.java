@@ -99,7 +99,7 @@ public class MainActivity extends MapActivity implements OnRegionChangedListener
         mMapView.setOnAnnotationSelectionChangedListener(this);
 
         // Prepare an alternate pin Drawable
-        final Drawable altMarker = MapViewUtils.boundMarkerCenterBottom(getResources().getDrawable(R.drawable.map_pin_holed_violet));
+        final Drawable altMarker = MapViewUtils.boundMarkerCenterBottom(getResources().getDrawable(R.drawable.map_pin_holed_purple));
 
         // Prepare the list of Annotation using the alternate Drawable for all
         // Annotation located in France

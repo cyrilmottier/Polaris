@@ -26,6 +26,19 @@ public final class Build {
     }
 
     /**
+     * Various version strings.
+     * 
+     * @author Cyril Mottier
+     */
+    public static class VERSION {
+        /**
+         * The user-visible version of the library; its possible values are
+         * defined in {@link VERSION_CODES}.
+         */
+        public static final int LIBRARY = VERSION_CODES.CALIFORNICATION;
+    }
+
+    /**
      * Enumeration of the currently known library version codes. These are the
      * values that can be found in library. Version numbers increment
      * monotonically with each official library release.
@@ -40,5 +53,7 @@ public final class Build {
          * version naming.
          */
         public static final int BREAKING_BAD = 1;
+
+        public static final int CALIFORNICATION = 2;
     }
 }

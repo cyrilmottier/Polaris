@@ -264,6 +264,10 @@ public class PolarisMapView extends MapView {
         void onLongClick(PolarisMapView mapView, GeoPoint geoPoint);
     }
 
+    public interface OnMapViewClickListener {
+        void onClick(PolarisMapView mapView, GeoPoint geoPoint);
+    }
+
     /**
      * Amount of time to display about 10 frames at 60Hz
      */
@@ -279,6 +283,7 @@ public class PolarisMapView extends MapView {
     private OnAnnotationSelectionChangedListener mOnAnnotationSelectionChangedListener;
     private OnRegionChangedListener mOnRegionChangedListener;
     private OnMapViewLongClickListener mOnMapViewLongClickListener;
+    private OnMapViewClickListener mOnMapViewClickListener;
 
     private OverlayContainer mOverlayContainer;
     private MyLocationOverlay mMyLocationOverlay;
@@ -327,7 +332,7 @@ public class PolarisMapView extends MapView {
     @TargetApi(3)
     private void init() {
         setBuiltInZoomControls(!supportsMultiTouchZoom());
-        setActionnable(true);
+        setInteractive(true);
 
         mOverlayContainer = new OverlayContainer(getContext(), mMagnetoCallback);
         getOverlays().add(mOverlayContainer);
@@ -497,6 +502,15 @@ public class PolarisMapView extends MapView {
     }
 
     /**
+     * Set a new {@link OnMapViewClickListener}.
+     * 
+     * @param l The new {@link OnMapViewClickListener}
+     */
+    public void setOnMapViewClickListener(OnMapViewClickListener l) {
+        mOnMapViewClickListener = l;
+    }
+
+    /**
      * Indicate whether user tracking is enabled or not. Having user tracking
      * enabled will automatically add a {@link MyLocationOverlay} and a button
      * on the upper-right corner to center the map back to the user's location.
@@ -546,25 +560,40 @@ public class PolarisMapView extends MapView {
     }
 
     /**
-     * Indicates whether this {@link PolarisMapView} is actionnable (i.e. if it
+     * @deprecated Use {@link #isInteractive()} instead
+     */
+    public boolean isActionnable() {
+        return isInteractive();
+    }
+
+    /**
+     * @deprecated Use {@link #setInteractive(boolean)} instead
+     */
+    @Deprecated
+    public void setActionnable(boolean actionnable) {
+        setInteractive(actionnable);
+    }
+
+    /**
+     * Indicates whether this {@link PolarisMapView} is interactive (i.e. if it
      * can be zoomed and panned by the user). More specifically, this method is
      * a replacement for the {@link MapView#isClickable()}.
      * 
-     * @return true if this {@link PolarisMapView} is actionnable, false
+     * @return true if this {@link PolarisMapView} is interactive, false
      *         otherwise
      */
-    public boolean isActionnable() {
+    public boolean isInteractive() {
         return isClickable();
     }
 
     /**
      * Enables or disables action events for this view. When a
-     * {@link PolarisMapView} is actionnable it will be zoomable and pannable.
+     * {@link PolarisMapView} is interactive it will be zoomable and pannable.
      * 
-     * @param actionnable true to make the view actionnable, false otherwise
+     * @param actionnable true to make the view interactive, false otherwise
      */
-    public void setActionnable(boolean actionnable) {
-        setClickable(actionnable);
+    public void setInteractive(boolean interactive) {
+        setClickable(interactive);
     }
 
     // /**
@@ -795,7 +824,7 @@ public class PolarisMapView extends MapView {
             if (marker != null) {
                 markerHeight = marker.getBounds().height();
             }
-            mapCalloutView.setMarkerHeight(markerHeight);
+            mapCalloutView.setBottomOffset(markerHeight);
 
             if (mOnAnnotationSelectionChangedListener != null) {
                 //@formatter:off
@@ -818,18 +847,25 @@ public class PolarisMapView extends MapView {
         @Override
         public void onSimpleTap(MotionEvent e) {
             setSelectedAnnotation(INVALID_POSITION);
+            if (mOnMapViewClickListener != null) {
+                mOnMapViewClickListener.onClick(PolarisMapView.this, getGeoPointForEvent(e));
+            }
         }
 
         @Override
         public void onLongPress(MotionEvent e) {
             if (mOnMapViewLongClickListener != null) {
-                mOnMapViewLongClickListener.onLongClick(PolarisMapView.this, getProjection().fromPixels((int) e.getX(), (int) e.getY()));
+                mOnMapViewLongClickListener.onLongClick(PolarisMapView.this, getGeoPointForEvent(e));
             }
         }
 
         @Override
         public void onDoubleTap(MotionEvent e) {
             getController().zoomInFixing((int) e.getX(), (int) e.getY());
+        }
+
+        private GeoPoint getGeoPointForEvent(MotionEvent e) {
+            return getProjection().fromPixels((int) e.getX(), (int) e.getY());
         }
     };
 

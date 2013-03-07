@@ -83,7 +83,7 @@ public class MapCalloutView extends ViewGroup {
 
     private int mInset;
     private int mSpacing;
-    private int mMarkerHeight;
+    private int mBottomOffset;
     private int mAnchorMode = ANCHOR_MODE_VARIABLE;
 
     private boolean mNeedRelayout;
@@ -176,7 +176,7 @@ public class MapCalloutView extends ViewGroup {
         mCallout.measure(MeasureSpec.makeMeasureSpec(widthSize, MeasureSpec.getMode(widthMeasureSpec)),
                 MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.getMode(heightMeasureSpec)));
 
-        setMeasuredDimension(mCallout.getMeasuredWidth() * widthCoeff, mCallout.getMeasuredHeight() + mMarkerHeight);
+        setMeasuredDimension(mCallout.getMeasuredWidth() * widthCoeff, mCallout.getMeasuredHeight() + mBottomOffset);
     }
 
     @Override
@@ -558,27 +558,45 @@ public class MapCalloutView extends ViewGroup {
     }
 
     /**
-     * Defines the height of the marker i.e. the dimension in pixels the callout
-     * will be offset from the bottom.
-     * 
-     * @return
+     * @deprecated use {@link #getBottomOffset()} instead
      */
+    @Deprecated
     public int getMarkerHeight() {
-        return mMarkerHeight;
+        return mBottomOffset;
     }
 
     /**
-     * Defines the height of the marker i.e. the dimension in pixels the callout
-     * will be offset from the bottom.
-     * 
-     * @return The height (in pixels) of the pin.
+     * @deprecated use {@link #setBottomOffset(int)} instead
      */
+    @Deprecated
     public void setMarkerHeight(int markerHeight) {
-        if (markerHeight < 0) {
-            markerHeight = 0;
+        setBottomOffset(markerHeight);
+    }
+
+    /**
+     * Return the dimension in pixels the callout will be offset from the
+     * bottom.
+     * 
+     * @return The bottom offset in pixels
+     */
+    public int getBottomOffset() {
+        return mBottomOffset;
+    }
+
+    /**
+     * Define the dimension in pixels the callout will be offset from the
+     * bottom. This is usually used to offset the callout from the height of the
+     * marker so that it appears on top of it.
+     * 
+     * @return The bottom offset (in pixels) the callout should be drawn
+     *         regarding its normal Y-origin.
+     */
+    public void setBottomOffset(int bottomOffset) {
+        if (bottomOffset < 0) {
+            bottomOffset = 0;
         }
-        if (mMarkerHeight != markerHeight) {
-            mMarkerHeight = markerHeight;
+        if (mBottomOffset != bottomOffset) {
+            mBottomOffset = bottomOffset;
             requestLayout();
             invalidate();
         }
