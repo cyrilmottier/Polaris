@@ -28,6 +28,8 @@ import com.google.android.maps.OverlayItem;
  */
 public class Annotation extends OverlayItem {
 
+	private Object mExtra;
+
     /**
      * Construct an {@link Annotation}.
      * 
@@ -35,7 +37,7 @@ public class Annotation extends OverlayItem {
      * @param title Title text for this annotation
      */
     public Annotation(GeoPoint point, String title) {
-        this(point, title, null, null);
+        this(point, title, null, null, null);
     }
 
     /**
@@ -46,7 +48,7 @@ public class Annotation extends OverlayItem {
      * @param snippet Snippet text for this annotation
      */
     public Annotation(GeoPoint point, String title, String snippet) {
-        this(point, title, snippet, null);
+        this(point, title, snippet, null, null);
     }
 
     /**
@@ -61,8 +63,25 @@ public class Annotation extends OverlayItem {
      *            method to prepare this {@link Drawable}'s bounds)
      */
     public Annotation(GeoPoint point, String title, String snippet, Drawable marker) {
+        this(point, title, snippet, marker, null);
+    }
+
+    /**
+     * Construct an {@link Annotation}.
+     * 
+     * @param point Position of the annotation.
+     * @param title Title text for this annotation
+     * @param snippet Snippet text for this annotation
+     * @param marker Drawable used as this {@link Annotation}'s marker (please
+     *            note this marker must have its bounds already set. You canuse
+     *            the {@link MapViewUtils#boundMarker(Drawable, int)} utility
+     *            method to prepare this {@link Drawable}'s bounds)
+     * @param extra Extra information of the annotation
+     */
+    public Annotation(GeoPoint point, String title, String snippet, Drawable marker, Object extra) {
         super(point, title, snippet);
         mMarker = marker;
+        mExtra = extra;
     }
 
     /**
@@ -73,5 +92,23 @@ public class Annotation extends OverlayItem {
      */
     public Drawable getMarker() {
         return mMarker;
+    }
+
+    /**
+     * Return the Extra information of this {@link Annotation}
+     * 
+     * @return The extra
+     */
+    public Object getExtra() {
+        return mExtra;
+    }
+
+    /**
+     * Sets the {@link Annotation} extra
+     * 
+     * @param extra Extra information for the annotation
+     */
+    public void setExtra(Object extra) {
+        mExtra = extra;
     }
 }
